@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class DepositRequest extends BankRequest {
+public class DepositRequest implements BankRequest {
     @Override
     public BankContext handle(final String command, final BankContext context) {
 
@@ -23,7 +23,7 @@ public class DepositRequest extends BankRequest {
     }
 
     @Override
-    public boolean isValid(String command, BankContext context) {
+    public boolean canHandle(String command, BankContext context) {
 
         final String[] args = command.split(" ");
         int accountIndex = Integer.valueOf(args[1]) - 1;
@@ -45,8 +45,4 @@ public class DepositRequest extends BankRequest {
         return true;
     }
 
-    @Override
-    public boolean isType(String command) {
-        return command.contains("deposit");
-    }
 }

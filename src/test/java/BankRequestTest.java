@@ -1,8 +1,5 @@
 import model.BankContext;
 import model.requests.CompositeRequest;
-import model.requests.DepositRequest;
-import model.requests.TransferRequest;
-import model.requests.WithdrawRequest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,9 +15,6 @@ public class BankRequestTest {
     @Before
     public void init() {
         compositeRequest = new CompositeRequest();
-        compositeRequest.addRequest(new DepositRequest());
-        compositeRequest.addRequest(new WithdrawRequest());
-        compositeRequest.addRequest(new TransferRequest());
 
         context = new BankContext();
         context.addAccount(10, 100, 20, 50, 30);

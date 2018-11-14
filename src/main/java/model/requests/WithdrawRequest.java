@@ -2,13 +2,12 @@ package model.requests;
 
 import model.BankContext;
 import model.BankRequest;
-import model.factory.RequestFactory;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class WithdrawRequest extends BankRequest {
+public class WithdrawRequest implements BankRequest {
 
     @Override
     public BankContext handle(final String command, final BankContext context) {
@@ -25,12 +24,7 @@ public class WithdrawRequest extends BankRequest {
     }
 
     @Override
-    public BankRequest getType(String command) {
-        return RequestFactory.getRequest(command);
-    }
-
-    @Override
-    public boolean isValid(String command, BankContext context) {
+    public boolean canHandle(String command, BankContext context) {
         final String[] args = command.split(" ");
         int accountIndex = Integer.valueOf(args[1]) - 1;
         int sum = Integer.valueOf(args[2]);
@@ -49,11 +43,6 @@ public class WithdrawRequest extends BankRequest {
         }
 
         return context.getAccounts().get(accountIndex) >= sum;
-    }
-
-    @Override
-    public boolean isType(String command) {
-        return command.contains("withdraw");
     }
 
 }

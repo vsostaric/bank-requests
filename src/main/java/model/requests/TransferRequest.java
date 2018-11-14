@@ -6,7 +6,7 @@ import model.BankRequest;
 import java.util.HashSet;
 import java.util.Set;
 
-public class TransferRequest extends BankRequest {
+public class TransferRequest implements BankRequest {
     @Override
     public BankContext handle(final String command, final BankContext context) {
 
@@ -23,7 +23,7 @@ public class TransferRequest extends BankRequest {
     }
 
     @Override
-    public boolean isValid(String command, BankContext context) {
+    public boolean canHandle(String command, BankContext context) {
 
         final String[] args = command.split(" ");
         int accountFromIndex = Integer.valueOf(args[1]);
@@ -47,13 +47,9 @@ public class TransferRequest extends BankRequest {
         final String withdrawRequest = "withdraw " + accountFromIndex + " " + sum;
         final String depositRequest = "deposit " + accountToIndex + " " + sum;
 
-        return new WithdrawRequest().isValid(withdrawRequest, context)
+        return new WithdrawRequest().canHandle(withdrawRequest, context)
                 &&
-                new DepositRequest().isValid(depositRequest, context);
+                new DepositRequest().canHandle(depositRequest, context);
     }
 
-    @Override
-    public boolean isType(String command) {
-        return command.contains("transfer");
-    }
 }
